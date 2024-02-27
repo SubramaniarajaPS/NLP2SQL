@@ -7,7 +7,7 @@ import sqlite3
 import google.generativeai as genAI
 
 # API Key Configuration
-genAI.configure(api_key=os.getenv("GEMINI_API_KEY"))
+genAI.configure(api_key="AIzaSyD75QnY0Nj3qaEhXl-eabZthwpK8C--EO4")
 
 
 # Function to load Google Gemini Pro Model which gives SQL Queries as response
@@ -37,14 +37,18 @@ prompt = [
     The DTS SQL database has the two tables named as MAP and LANG.
     The MAP table from DTS database has the following columns - MAPKEY, WARNING, DTC, FAILURE, CAUTION and SEVERITY.\n
     The LANG table from DTS database has the following columns - LANGLOCALEKEY, COUNTRY, LANGUAGE, LOCALE, MAPKEY.\n
+    From the MAP table, if the given input has something similar to 600E00, then consider it as a record of WARNING.
+    From the MAP table, if the given input has something similar to 0000, then consider it as a record of DTC.
+    From the MAP table, if the given input  has something similar to 11, then consider it as a record of FAILURE.
+    From the MAP table, if the given input length is 100 , then consider it as CAUTION.
     \nFor example,\nExample 1 - How many entries of records are present in MAP table?,
     the SQL command will be something like this SELECT COUNT(*) FROM MAP;
     \nExample 2 - Tell me all the entries from the MAP table records having SEVERITY 1 ?, the SQL command will be something like this SELECT * FROM MAP where SEVERITY=1;
-    also the sql code should not have``` in beginning or end of the sql word in the output
     \nFor example,\nExample 3 - Give me the record from LANG table that has mapkeys equal to 1 and 2,
     the SQL command will be something like this SELECT * FROM LANG where MAPKEY in(1,2);
     \nFor example,\nExample 4 - Give all the language and country for the particular warning,dtc and failure ,
     the SQL command will be something like this SELECT MAP.WARNING, MAP.DTC, MAP.FAILURE, LANG.COUNTRY, LANG.LANGUAGE FROM MAP JOIN LANG ON MAP.MAPKEY = LANG.MAPKEY;
+    also the sql code should not have``` in beginning or end of the sql word in the output
   """
 ]
 
@@ -59,6 +63,7 @@ submit = st.button("Submit")
 # if submit is clicked
 if submit:
     response = get_gemini_response(question, prompt)
+    print(question)
     print(response)
     data = read_sql_query(response, "DTS.db")
     st.subheader("THE DESIRED RESPONSE IS ")
