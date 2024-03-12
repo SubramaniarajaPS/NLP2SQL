@@ -5,9 +5,10 @@ import streamlit as st
 import os
 import sqlite3
 import google.generativeai as genAI
+import auth_token as auth
 
 # API Key Configuration
-genAI.configure(api_key = os.getenv("GEMINI_API_KEY")
+genAI.configure(api_key = auth.get_token)
 
 
 # Function to load Google Gemini Pro Model which gives SQL Queries as response
