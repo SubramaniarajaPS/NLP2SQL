@@ -14,8 +14,8 @@ api_endpoint = "https://api.pd01i.gcp.ford.com/llm/api/chat"
 proxy_endpoint = "http://internet.ford.com:83"
 scope = "api://0c646856-16de-4604-86f6-ddeaa039a541/.default"
 
-client_id = "ab07db28-3f02-4831-b38e-b2eba96c0d0e"
-client_secret = "~Pf8Q~4iwFGtFst2Ee3vmn0TpHEYlGFHlYzzrbJ7"
+client_id = "xxxxxx"
+client_secret = "xxxxxxx"
 
 os.environ['HTTP_PROXY'] = proxy_endpoint
 os.environ['HTTPS_PROXY'] = proxy_endpoint
